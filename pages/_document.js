@@ -1,6 +1,6 @@
 import { NavBar } from '@/components/Nav/NavBar'
 import { Html, Head, Main, NextScript } from 'next/document'
-import Image from "next/image";
+import Image from "next/legacy/image";
 
 export default function Document() {
   return (

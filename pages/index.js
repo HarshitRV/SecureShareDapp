@@ -161,7 +161,7 @@ export default function Home() {
                 </div>
                 <div>
                   <button
-                    style={{ "--clr": "skyblue", "margin-top": "2%" }}
+                    style={{ "--clr": "skyblue", "marginTop": "2%" }}
                     className={styles.connectBtn}
                     onClick={uploadToServer}>
                     <span>Generate share link 🔗</span>
