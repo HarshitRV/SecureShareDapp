@@ -1,0 +1,56 @@
+.navContainer {
+    margin-top: 1%;
+    width: "100vw";
+    display: flex;
+}
+
+.navTitle {
+    letter-Spacing: 2px;
+    margin-left: 1%;
+    margin-right: 1%;
+    color: #fff;
+    font-weight: 500;
+    opacity: 0.80;
+    cursor:pointer;
+}
+
+.navList {
+    display: flex;
+    padding: 0;
+    margin-top: 0%;
+    margin-right: 2%;
+}
+
+.navButton {
+    font-size: 1.2em;
+    margin: 0 2% 0 45%;
+    display: inline-block;
+}
+
+.navButton a {
+    transition: all 0.3s ease 0s;
+    text-decoration: none;
+    color: rgb(236, 247, 249);
+}
+
+.navButton a:hover {
+    color: rgb(181, 165, 165);
+}
+
+.navContact {
+    background-color: rgb(236, 247, 249);
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease 0s;
+    margin-left: auto;
+    margin-right: 2%;
+    font-size: 1em;
+    height: 30px;
+    font-weight: 600;
+    margin-top:.1%;
+}
+
+.navContact:hover{
+    background-color: rgba(194, 202, 204, 0.8);
+}
