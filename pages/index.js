@@ -140,17 +140,17 @@ export default function Home() {
   const renderMainContent = () => {
     return (
       <>
-        <div class="container">
-          <div class="containerBoxOne">
+        <div className="container">
+          <div className="containerBoxOne">
             <div>
               <ConnectWallet className="connectWallet" />
             </div>
-            <div class="mainContent">
+            <div className="mainContent">
               <div>
-                <div class="mainFile">
+                <div className="mainFile">
                   <label>
                     <input
-                      class="inputFile"
+                      className="inputFile"
                       type="file"
                       name="file"
                       id="file"
@@ -171,7 +171,7 @@ export default function Home() {
               </div>
             </div>
           </div>
-          <div class="containerBoxTwo">
+          <div className="containerBoxTwo">
             <InfoHeader />
             <div>{loading ? "Uploading..." : renderResponse(responseData)}</div>
           </div>
