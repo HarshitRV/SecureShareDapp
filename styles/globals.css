@@ -262,6 +262,12 @@ body {
 }
 
 @media(max-width:26em) {
+
+  .container{
+    width: 100%;
+    height: 100%;
+  }
+
   .inputFile {
     width: 60%;
   }
