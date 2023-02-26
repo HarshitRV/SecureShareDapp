@@ -140,18 +140,17 @@ export default function Home() {
   const renderMainContent = () => {
     return (
       <>
-        <div className="mainBox">
-          <div className="mainBox2">
-          <div id="container">
+        <div class="container">
+          <div class="containerBoxOne">
             <div>
+              <ConnectWallet className="connectWallet" />
             </div>
-            <div className="mainContent">
+            <div class="mainContent">
               <div>
-                <div className="mainFile">
-                  <div className="paraFile"></div>
+                <div class="mainFile">
                   <label>
                     <input
-                      className="inputFile"
+                      class="inputFile"
                       type="file"
                       name="file"
                       id="file"
@@ -161,23 +160,20 @@ export default function Home() {
                 </div>
                 <div>
                   <button
-                    style={{ "--clr": "skyblue", "marginTop": "2%" }}
+                    style={{ "--clr": "skyblue", marginTop: "2%" }}
                     className={styles.connectBtn}
-                    onClick={uploadToServer}>
+                    onClick={uploadToServer}
+                  >
                     <span>Generate share link 🔗</span>
                     <i></i>
                   </button>
-                  <div>
-                {loading ? "Uploading..." : renderResponse(responseData)}
-              </div>
                 </div>
               </div>
             </div>
           </div>
-          <div className="mainContent2">
-          <InfoHeader />
-          <ConnectWallet className="connectWallet" />
-          </div>
+          <div class="containerBoxTwo">
+            <InfoHeader />
+            <div>{loading ? "Uploading..." : renderResponse(responseData)}</div>
           </div>
         </div>
       </>
@@ -192,9 +188,9 @@ export default function Home() {
           <meta name="description" content="secure-share-app" />
           <link rel="icon" href="/favicon.ico" />
         </Head>
-        
+
         {renderMainContent()}
-       
+
         <footer>© Hackerspace {new Date().getFullYear()}</footer>
       </div>
     </>

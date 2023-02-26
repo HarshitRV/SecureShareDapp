@@ -1,11 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Kdam+Thmor+Pro&family=Poppins:ital,wght@0,400;0,900;1,800&display=swap');
 
+/*------------------------------------*/
+/*         Custom Properties          */
+/*------------------------------------*/
+
 :root {
 
   /* Colors */
 
-  --clr-green: 111 100% 54%;
-  --clr-grey: 214 9.6% 42.9%;
   --clr-dark: 230 35% 7%;
   --clr-light: 231 77% 90%;
   --clr-white: 0 0% 100%;
@@ -21,9 +23,11 @@
   --fs-200: 0.875rem;
 
   /* font families */
+
   --ff-serif: "Bellefair", serif;
   --ff-sans-cond: "Barlow Condensed", sans-serif;
   --ff-sans-normal: "Barlow", sans-serif;
+
 
   /* Spreed */
 
@@ -53,6 +57,7 @@
     --fs-400: 1.125rem;
 
   }
+
 }
 
 /*------------------------------------*/
@@ -91,113 +96,179 @@ h4,
 h5,
 p {
   font-weight: 400;
+
 }
 
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  /* added line */
-  border: 0;
-}
+
 
 /* Set Up The Body */
 
 body {
-  
+
   font-family: 'Kdam Thmor Pro', sans-serif;
   font-size: var(--fs-400);
   color: hsl(var(--clr-white));
-  background-color: hsl(var(--clr-dark));
+
   min-height: 100vh;
   overflow: hidden;
-}
-
-.mainNext{
- display: flex;
- align-items: center;
- justify-content: center;
- height: 100vh;
-}
-
-.mainBox{
-  height: 80vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 70vw;
+  background-image: url('https://c0.wallpaperflare.com/preview/1021/163/815/technology-networking-abstract-business.jpg');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: center;
 }
 
-.mainBox2{
-  border:8px solid rgba(175, 159, 159, 0.448);
+.container {
+  border: none;
+  outline: none;
   border-radius: 30px;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 91%;
+  width: 60vw;
+  background: #111;
+  position: relative;
+  z-index: 0;
 }
 
-.mainContent{
+.container:before {
+  content: '';
+  background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  background-size: 400%;
+  z-index: -1;
+  filter: blur(5px);
+  width: calc(100% + 4px);
+  height: calc(100% + 4px);
+  animation: glowing 20s linear infinite;
+  opacity: 0;
+  transition: opacity .3s ease-in-out;
+  border-radius: 10px;
+}
+
+
+.container:before {
+  opacity: 1;
+}
+
+.container:after {
+  z-index: -1;
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: #111;
+  left: 0;
+  top: 0;
+  border-radius: 10px;
+}
+
+@keyframes glowing {
+  0% {
+    background-position: 0 0;
+  }
+
+  50% {
+    background-position: 400% 0;
+  }
+
+  100% {
+    background-position: 0 0;
+  }
+}
+
+.containerBoxOne {
   margin: auto;
-  border: 6px dotted rgb(120, 113, 113);
-  padding: 60px;
   margin: 1%;
-}
-
-.mainContent2{
-  border: 6px dotted rgb(120, 113, 113);
-  display:flex;
-  flex-direction: column;
-  height: 37vh;
-  margin: 1%;
-  padding: 0 30px 0 30px;
   text-align: center;
+  padding: 5%;
 }
 
+.containerBoxTwo {
 
-.paraContent{
-  margin: 1% 0;
-  font-size: 1.5em;
+  margin: 1%;
+  text-align: center;
+  padding: 4%;
 }
 
-.paraType{
- margin: auto;
- width: 100%;
- text-align:center;
-}
-
-.inputFile{
+.inputFile {
   border: 2px solid rgb(201, 20, 251);
-  border-radius: 50px;
-  padding: 2px;
+  padding: 1%;
   font-size: 1em;
-  margin: 8% 0;
+  margin: 8% 0%;
+  width: 100%;
 }
 
-.inputFile::-webkit-file-upload-button{
-  background-image:linear-gradient(45deg,rgb(252, 37, 216),rgb(44, 51, 249));
+.inputFile::-webkit-file-upload-button {
+  background-image: linear-gradient(45deg, rgb(252, 37, 216), rgb(44, 51, 249));
   color: white;
-  padding: 8px 16px;
+  padding: 3% 6%;
   border: name;
-  border-radius: 50px;
   cursor: pointer;
-  margin-right: 10%;
 }
 
-.mainFile{
+.mainFile {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.paraFile{
-  margin: 2%;
-  font-size: 1.7em;
+@media(max-width:85em) {
+  .container {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+
+  .containerBoxOne {
+    text-align: center;
+    padding: 5%;
+    width: max-content;
+
+  }
+
+  .containerBoxTwo {
+    text-align: center;
+    padding: 5%;
+  }
+}
+
+
+@media(max-width:77em) {
+  .container {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+}
+
+
+@media(max-width:40em) {
+  .containerBoxOne {
+    padding: 0%;
+  }
+
+  .inputFile {
+    width: 80%;
+    font-size: .8em;
+  }
+
+  .inputFile::-webkit-file-upload-button {
+    font-size: 0.8em;
+  }
+}
+
+@media(max-width:26em) {
+  .inputFile {
+    width: 60%;
+  }
+
+  .inputFile::-webkit-file-upload-button {
+    font-size: 0.5em;
+  }
 }
 
 .boxHeader {
@@ -207,7 +278,7 @@ body {
 }
 
 .textHeader {
-  font-size: clamp(1rem, 3vw + 1rem, 4rem);
+  font-size: calc(20px + (35 - 20) * (100vw - 320px) / (1920 - 320));
   font-weight: 800;
   /* font-family: 'Poppins', sans-serif; */
   letter-spacing: 2px;
@@ -225,7 +296,7 @@ body {
 }
 
 .textHeader::before {
-  background-color: #0F1117;
+  background-color: #111111;
   animation: typewritter var(--typewriterSpeed) 1s steps(18) forwards;
 }
 
@@ -237,17 +308,21 @@ body {
 }
 
 .textSubHeader {
-  margin-bottom:1%;
-  font-size: 2rem;
+  margin-bottom: 1%;
+  font-size: calc(15px + (35 - 20) * (100vw - 320px) / (1920 - 320));
   font-weight: 600;
   opacity: 0;
   transform: translateY(2rem);
   animation: fadeInUp 1s ease calc(var(--typewriterSpeed) + 1s) forwards;
 }
 
-.walletHeader{
-  margin:2%;
-  text-align:center;
+.paraText {
+  font-size: calc(15px + (35 - 20) * (100vw - 320px) / (1920 - 320));
+}
+
+.walletHeader {
+  margin: 2%;
+  text-align: center;
 }
 
 @keyframes typewritter {
@@ -270,13 +345,15 @@ body {
 }
 
 @keyframes glowing {
-  0% { background-position: 0 0; }
-  50% { background-position: 400% 0; }
-  100% { background-position: 0 0; }
+  0% {
+    background-position: 0 0;
+  }
+
+  50% {
+    background-position: 400% 0;
+  }
+
+  100% {
+    background-position: 0 0;
+  }
 }
-
-
-
-
-/* Nagivation */
-

@@ -17,9 +17,9 @@ export default function Document() {
       }}>
       <Image src="/bg2.jpg" alt="cat Background" layout="fill" objectFit='cover' />
       </div>
-        <nav>
+        {/* <nav>
           <NavBar />
-        </nav>
+        </nav> */}
         <div className="mainNext">
         <Main />
         <NextScript />
