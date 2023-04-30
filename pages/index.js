@@ -7,6 +7,7 @@ import Head from "next/head";
  * Ether js modules
  */
 import Web3Modal from "web3modal";
+
 import { providers, Contract } from "ethers";
 
 /**
@@ -150,7 +151,7 @@ export default function Home() {
 
 			setWalletConnected(true);
 		} catch (e) {
-			window.alert("could not connect to wallet");
+			window.alert("User rejected the connection request");
 			// if error occurs while generating the keys then send delete request to the server
 			// !BUG
 			// await fetch(`http://localhost:3000/api/v1/crypt/deleteUser?publicAddress=${address}`, {
