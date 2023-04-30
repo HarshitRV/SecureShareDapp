@@ -108,30 +108,57 @@ body {
   font-family: 'Kdam Thmor Pro', sans-serif;
   font-size: var(--fs-400);
   color: hsl(var(--clr-white));
-
   min-height: 100vh;
-  overflow: hidden;
+  /* overflow: hidden; */
   display: flex;
-  align-items: center;
+  flex-direction: row; 
+  align-items: center; 
   justify-content: center;
-  background-image: url('https://c0.wallpaperflare.com/preview/1021/163/815/technology-networking-abstract-business.jpg');
+  background-image: url('https://i.imgur.com/UZ4VLZj.jpg');
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: cover;
   background-position: center;
+  /* border: 2px solid red; */
 }
+
+/* .mainNext{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border:10px solid white;
+} */
 
 .container {
   border: none;
   outline: none;
   border-radius: 30px;
   display: flex;
-  align-items: center;
+  flex-direction: column;
   justify-content: center;
-  width: 60vw;
+  width: 65vw;
   background: #111;
   position: relative;
   z-index: 0;
+  flex-wrap: wrap;
+  opacity: 0.8;
+}
+
+.container2{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* border: 3px solid orange; */
+}
+
+
+.textaria{
+  padding: .5em;
+  width: 60%;
+  margin: 0 20% 20% 17.5%;
+  /* border: 5px solid brown; */
 }
 
 .container:before {
@@ -139,10 +166,10 @@ body {
   background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
   position: absolute;
   top: -2px;
-  left: -2px;
+  right: -2px;
   background-size: 400%;
   z-index: -1;
-  filter: blur(5px);
+  filter: blur(1px);
   width: calc(100% + 4px);
   height: calc(100% + 4px);
   animation: glowing 20s linear infinite;
@@ -150,6 +177,7 @@ body {
   transition: opacity .3s ease-in-out;
   border-radius: 10px;
 }
+
 
 
 .container:before {
@@ -216,10 +244,29 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  /* border: 2px solid gray; */
+}
+@media(max-width: 99em) {
+  .textaria{
+    margin: 0 20% 20% 12.5%;
+    /* border: 5px solid blue; */
+  }  
+}
+
+@media(max-width: 90em) {
+  .textaria{
+    margin: 0 20% 20% 10%;
+    /* border: 5px solid rgb(17, 233, 20); */
+  }  
 }
 
 @media(max-width:85em) {
   .container {
+    display: flex;
+    flex-direction: row-reverse;
+  }
+
+  .container2 {
     display: flex;
     flex-direction: column-reverse;
   }
@@ -241,8 +288,13 @@ body {
 @media(max-width:77em) {
   .container {
     display: flex;
+    flex-direction: row-reverse;
+  }
+  .container2 {
+    display: flex;
     flex-direction: column-reverse;
   }
+
 }
 
 
@@ -267,6 +319,10 @@ body {
     width: 100%;
     height: 100%;
   }
+  .container2 {
+    width: 100%;
+    height: 100%;
+  }
 
   .inputFile {
     width: 60%;
@@ -281,6 +337,7 @@ body {
   text-align: center;
   place-content: center;
   display: grid;
+  /* border: 2px solid orange; */
 }
 
 .textHeader {
@@ -330,6 +387,8 @@ body {
   margin: 2%;
   text-align: center;
 }
+
+
 
 @keyframes typewritter {
   to {

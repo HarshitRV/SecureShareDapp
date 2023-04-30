@@ -140,17 +140,18 @@ export default function Home() {
   const renderMainContent = () => {
     return (
       <>
-        <div class="container">
-          <div class="containerBoxOne">
+        <div className="container">
+          <div className="container2">
+          <div className="containerBoxOne">
             <div>
-              <ConnectWallet className="connectWallet" />
+              <ConnectWallet classNameName="connectWallet" />
             </div>
-            <div class="mainContent">
+            <div className="mainContent">
               <div>
-                <div class="mainFile">
+                <div className="mainFile">
                   <label>
                     <input
-                      class="inputFile"
+                      className="inputFile"
                       type="file"
                       name="file"
                       id="file"
@@ -164,18 +165,23 @@ export default function Home() {
                     className={styles.connectBtn}
                     onClick={uploadToServer}
                   >
-                    <span>Generate share link 🔗</span>
+                    <span>Generate link 🔗</span>
                     <i></i>
                   </button>
                 </div>
               </div>
             </div>
           </div>
-          <div class="containerBoxTwo">
+          <div className="containerBoxTwo">
             <InfoHeader />
             <div>{loading ? "Uploading..." : renderResponse(responseData)}</div>
           </div>
+          </div>
+          <div className="txtbox">
+            <input className="textaria" type="text-area" placeholder="Recevicer's Wallet Address "></input>
+          </div>
         </div>
+        
       </>
     );
   };
@@ -188,10 +194,8 @@ export default function Home() {
           <meta name="description" content="secure-share-app" />
           <link rel="icon" href="/favicon.ico" />
         </Head>
-
         {renderMainContent()}
-
-        <footer>© Hackerspace {new Date().getFullYear()}</footer>
+        {/* <footer id="footer">© Hackerspace {new Date().getFullYear()}</footer> */}
       </div>
     </>
   );

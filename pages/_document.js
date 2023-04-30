@@ -15,7 +15,7 @@ export default function Document() {
         opacity: 0.50
        
       }}>
-      <Image src="/bg2.jpg" alt="cat Background" layout="fill" objectFit='cover' />
+      <Image src="/bg.jpg" alt="cat Background" layout="fill" objectFit='cover' />
       </div>
         {/* <nav>
           <NavBar />
@@ -24,6 +24,7 @@ export default function Document() {
         <Main />
         <NextScript />
         </div>
+        
       </body>
     </Html>
   )
