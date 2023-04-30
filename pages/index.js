@@ -1,24 +1,56 @@
+/**
+ * Next js modules
+ */
 import Head from "next/head";
+
+/**
+ * Ether js modules
+ */
 import Web3Modal from "web3modal";
 import { providers, Contract } from "ethers";
-import { useEffect, useState, useRef } from "react";
-// need to import the contract address and the abi
+
+/**
+ * React js modules
+ */
+import { useEffect, useState, useRef, useCallback } from "react";
+
+/**
+ * Contract info import
+ */
+import { SECURE_SHARE_CONTRACT_ADDRESS, abi } from "@/constants";
+
+/**
+ * Custom components
+ */
 import { ConnectWallet } from "@/components/Buttons/ConnectWallet";
-import { NavBar } from "@/components/Nav/NavBar";
-import Image from "next/image";
-import styles from "../styles/Button.module.css";
 import { InfoHeader } from "@/components/Info/InfoHeader";
 
+/**
+ * Styles
+ */
+import styles from "../styles/Button.module.css";
+
+/**
+ * Server function imports
+ */
+import { genKeyPairs } from "@/server/serverapi";
+
+// Home function
 export default function Home() {
   const [walletConnected, setWalletConnected] = useState(false);
-  const [file, setFile] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [responseData, setResponseData] = useState({
-    message: "",
-    longurl: "",
-    shortUrl: "",
-  });
-  const web3ModalRef = useRef();
+	const [walletAddress, setWalletAddress] = useState("");
+	const [fileData, setFile] = useState({
+		file: null,
+		receiverAddress: "",
+	});
+	const [formValid, setFormValid] = useState(false);
+	const [loading, setLoading] = useState(false);
+	const [responseData, setResponseData] = useState({
+		message: "",
+		longurl: "",
+		shortUrl: "",
+	});
+	const web3ModalRef = useRef();
 
   /**
    * @description -  Returns a Provider or Signer object representing the Ethereum RPC
@@ -53,18 +85,80 @@ export default function Home() {
     }
     return web3Provider;
   };
+  
+  /**
+	 * @description store user keys on chain
+	 */
+	const storeUserKey = useCallback(
+		async ({ privateKey, publicKey, aesKey }) => {
+			try {
+				const signer = await getProviderOrSigner(true);
+				// creating new instance of the contract with signer
+				const secureShareContract = new Contract(
+					SECURE_SHARE_CONTRACT_ADDRESS,
+					abi,
+					signer
+				);
+
+				// check if the user exists on chain
+				const userExists = await secureShareContract.storedUserPublicKeys(
+					signer.getAddress()
+				);
+
+				if (!userExists && confirm("Registering as new user?")) {
+					// console.log(privateKey, publicKey, aesKey);
+					// console.log(typeof privateKey, typeof publicKey, typeof aesKey);
+
+					// call store storeUserKeys
+					const tx = await secureShareContract.storeUserKeys(
+						privateKey,
+						publicKey,
+						aesKey
+					);
+					setLoading(true);
+					await tx.wait();
+					setLoading(false);
+				}
+			} catch (err) {
+				window.alert("aborting transaction for registering user");
+				console.error(err);
+			}
+		},
+		[]
+	);
 
   /**
-   * @description - connects the MetaMask wallet
-   */
-  const connectWallet = async () => {
-    try {
-      await getProviderOrSigner();
-      setWalletConnected(true);
-    } catch (e) {
-      console.error(e);
-    }
-  };
+	 * @description connects the MetaMask wallet
+	 */
+	const connectWallet = useCallback(async () => {
+		try {
+			const signer = await getProviderOrSigner(true);
+			// need the wallet public address.
+			const address = await signer.getAddress();
+			console.log("user address: ", address);
+			setWalletAddress(address);
+
+			// then create the RSA keys for the user
+			const response = await genKeyPairs(address);
+
+			console.log("server response data");
+			console.table(response);
+
+			if (!response.userExists) {
+				storeUserKey(response.keys);
+			}
+
+			setWalletConnected(true);
+		} catch (e) {
+			window.alert("could not connect to wallet");
+			// if error occurs while generating the keys then send delete request to the server
+			// !BUG
+			// await fetch(`http://localhost:3000/api/v1/crypt/deleteUser?publicAddress=${address}`, {
+			// 	method: "DELETE",
+			// });
+			console.error(e);
+		}
+	}, [storeUserKey]);
 
   useEffect(() => {
     if (!walletConnected) {
@@ -75,63 +169,118 @@ export default function Home() {
       });
       connectWallet();
     }
-  }, [walletConnected]);
-
+  }, [walletConnected, connectWallet]);
+  
   /**
-   * @description - upload the file to the client
-   * @param {*} event
-   */
-  const uploadToClient = (event) => {
-    if (event.target.files && event.target.files[0])
-      setFile(event.target.files[0]);
-  };
-
+	 * @description upload the file to the client
+	 * @param {*} event
+	 */
+	const setFileHandler = (event) => {
+		if (event.target.files && event.target.files[0])
+			setFile((priveState) => {
+				return {
+					...priveState,
+					file: event.target.files[0],
+				};
+			});
+	};
+  
   /**
-   * @description - uploads the file to the server
-   * @param {*} event
-   */
-  const uploadToServer = async (event) => {
-    try {
-      const body = new FormData();
-      console.log("File", file);
-      body.append("file", file);
-      setLoading(true);
-      const response = await fetch(
-        "https://fileshare-fikr.onrender.com/api/v2/upload",
-        {
-          method: "post",
-          body,
-        }
-      );
-      const data = await response.json();
-      console.log(data);
-      setResponseData({
-        message: data.message,
-        longurl: data.longurl,
-        shortUrl: data.shortUrl,
-      });
-      setLoading(false);
-    } catch (e) {
-      console.error(e);
-      setResponseData("Internal server error");
-      setLoading(false);
-    }
-  };
-
+	 * @description set receiver address
+	 * @param {*} event
+	 */
+	const setReceiverAddressHandler = (event) => {
+		if (event.target.value)
+			setFile((prevState) => {
+				return {
+					...prevState,
+					receiverAddress: event.target.value,
+				};
+			});
+	};
+  
   /**
-   * @description - Sets the response data
-   * @param {*} responseData
-   * @returns jsx
-   */
-  const renderResponse = (responseData) => {
-    return (
-      <div>
-        <p>{responseData.message}</p>
-        <p>{responseData.longurl}</p>
-        <p>{responseData.shortUrl}</p>
-      </div>
-    );
-  };
+	 * @description - uploads the file to the server
+	 * @param {*} event
+	 */
+	const uploadToServer = async () => {
+		try {
+			const body = new FormData();
+
+			// need to read the aes key of the sender from the chain
+			// need to read the public key of the receiver from the chain
+			// and send it to the server
+			const signer = await getProviderOrSigner(true);
+			const secureShareContract = new Contract(
+				SECURE_SHARE_CONTRACT_ADDRESS,
+				abi,
+				signer
+			);
+
+			const [senderAesKey, receiverPublicKey] = await Promise.all([
+				secureShareContract.getAesKey(),
+				secureShareContract.getPublicKey(),
+			]);
+
+			body.append("file", fileData.file);
+			body.append("senderAesKey", senderAesKey);
+			body.append("receiverPublicKey", receiverPublicKey);
+
+			const { file, receiverAddress } = fileData;
+
+			console.table(fileData);
+			console.log("senderAesKey: ", senderAesKey);
+			console.log("receiverPublicKey: ", receiverPublicKey);
+
+			// check if senderAesKey and receiverPublicKey are not empty
+			if(!senderAesKey || !receiverPublicKey) {
+				window.alert("Missing keys");
+				return;
+			}
+
+			if (!file || !receiverAddress) {
+				window.alert("Please select a file and receiver address");
+				return;
+			}
+
+			setLoading(true);
+			const response = await fetch(
+				// while testing use localhost
+				`http://localhost:3000/api/v1/crypt/upload?publicAddress=${walletAddress}&receiverAddress=${receiverAddress}`,
+				{
+					method: "post",
+					body,
+				}
+			);
+			const data = await response.json();
+			console.log(data);
+			setResponseData({
+				message: data.message,
+				longurl: data.longurl,
+				shortUrl: data.shortUrl,
+			});
+			setLoading(false);
+		} catch (e) {
+			console.error(e);
+			setResponseData("Internal server error");
+			setLoading(false);
+		}
+	};
+  
+  /**
+	 * @description - Sets the response data
+	 * @param {*} responseData
+	 * @returns jsx
+	 */
+	const renderResponse = (responseData) => {
+		return (
+			<div>
+				<p>{responseData.message}</p>
+				<p>{responseData.longurl}</p>
+				<p>{responseData.shortUrl}</p>
+			</div>
+		);
+	};
 
   /**
    * @description - Renders the main body of the page.
@@ -144,18 +293,22 @@ export default function Home() {
           <div className="container2">
           <div className="containerBoxOne">
             <div>
-              <ConnectWallet classNameName="connectWallet" />
+              <ConnectWallet
+								walletConnected={walletConnected}
+								className="connectWallet"
+								connectWallet={connectWallet}
+							/>
             </div>
             <div className="mainContent">
               <div>
                 <div className="mainFile">
-                  <label>
+                  <label htmlFor="file"></label>
                     <input
                       className="inputFile"
                       type="file"
                       name="file"
                       id="file"
-                      onChange={uploadToClient}
+                      onChange={setFileHandler}
                     />
                   </label>
                 </div>
@@ -178,7 +331,7 @@ export default function Home() {
           </div>
           </div>
           <div className="txtbox">
-            <input className="textaria" type="text-area" placeholder="Recevicer's Wallet Address "></input>
+            <input className="textaria" type="text-area" placeholder="Recevicer's Wallet Address" id="receiverAddress" onChange={setReceiverAddressHandler}></input>
           </div>
         </div>
         
