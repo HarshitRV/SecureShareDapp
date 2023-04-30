@@ -37,7 +37,7 @@ import { genKeyPairs } from "@/server/serverapi";
 
 // Home function
 export default function Home() {
-	const [walletConnected, setWalletConnected] = useState(false);
+  const [walletConnected, setWalletConnected] = useState(false);
 	const [walletAddress, setWalletAddress] = useState("");
 	const [fileData, setFile] = useState({
 		file: null,
@@ -52,41 +52,41 @@ export default function Home() {
 	});
 	const web3ModalRef = useRef();
 
-	/**
-	 * @description -  Returns a Provider or Signer object representing the Ethereum RPC
-	 *                 with or without the signing capabilities of metamask attached
-	 *
-	 *		             A `Provider` is needed to interact with the blockchain - reading transactions,
-	 *                 reading balances, reading state, etc.
-	 *
-	 *    			       A `Signer` is a special type of Provider used in case a `write` transaction
-	 * 				         needs to be made to the blockchain, which involves the connected account
-	 * 				         needing to make a digital signature to authorize the transaction being sent.
-	 *
-	 * 			           Metamask exposes a Signer API to allow your website to
-	 * 		    	       request signatures from the user using Signer functions.
-	 *
-	 * @param {*} needSigner
-	 * @returns web3Provider or signer
-	 */
-	const getProviderOrSigner = async (needSigner = false) => {
-		const provider = await web3ModalRef.current.connect();
-		const web3Provider = new providers.Web3Provider(provider);
+  /**
+   * @description -  Returns a Provider or Signer object representing the Ethereum RPC
+   *                 with or without the signing capabilities of metamask attached
+   *
+   *		           A `Provider` is needed to interact with the blockchain - reading transactions,
+   *                 reading balances, reading state, etc.
+   *
+   *    			   A `Signer` is a special type of Provider used in case a `write` transaction
+   * 				   needs to be made to the blockchain, which involves the connected account
+   * 				   needing to make a digital signature to authorize the transaction being sent.
+   *
+   * 			       Metamask exposes a Signer API to allow your website to
+   * 		    	   request signatures from the user using Signer functions.
+   *
+   * @param {*} needSigner
+   * @returns web3Provider or signer
+   */
+  const getProviderOrSigner = async (needSigner = false) => {
+    const provider = await web3ModalRef.current.connect();
+    const web3Provider = new providers.Web3Provider(provider);
 
-		const { chainId } = await web3Provider.getNetwork();
-		if (chainId !== 5) {
-			window.alert("change the netwrok to goerli network");
-			throw new Error("Change network to goerli network");
-		}
+    const { chainId } = await web3Provider.getNetwork();
+    if (chainId !== 5) {
+      window.alert("change the netwrok to goerli network");
+      throw new Error("Change network to goerli network");
+    }
 
-		if (needSigner) {
-			const signer = web3Provider.getSigner();
-			return signer;
-		}
-		return web3Provider;
-	};
-
-	/**
+    if (needSigner) {
+      const signer = web3Provider.getSigner();
+      return signer;
+    }
+    return web3Provider;
+  };
+  
+  /**
 	 * @description store user keys on chain
 	 */
 	const storeUserKey = useCallback(
@@ -127,7 +127,7 @@ export default function Home() {
 		[]
 	);
 
-	/**
+  /**
 	 * @description connects the MetaMask wallet
 	 */
 	const connectWallet = useCallback(async () => {
@@ -160,18 +160,18 @@ export default function Home() {
 		}
 	}, [storeUserKey]);
 
-	useEffect(() => {
-		if (!walletConnected) {
-			web3ModalRef.current = new Web3Modal({
-				network: "goerli",
-				providerOptions: {},
-				disableInjectedProvider: false,
-			});
-			connectWallet();
-		}
-	}, [walletConnected, connectWallet]);
-
-	/**
+  useEffect(() => {
+    if (!walletConnected) {
+      web3ModalRef.current = new Web3Modal({
+        network: "goerli",
+        providerOptions: {},
+        disableInjectedProvider: false,
+      });
+      connectWallet();
+    }
+  }, [walletConnected, connectWallet]);
+  
+  /**
 	 * @description upload the file to the client
 	 * @param {*} event
 	 */
@@ -184,8 +184,8 @@ export default function Home() {
 				};
 			});
 	};
-
-	/**
+  
+  /**
 	 * @description set receiver address
 	 * @param {*} event
 	 */
@@ -198,8 +198,8 @@ export default function Home() {
 				};
 			});
 	};
-
-	/**
+  
+  /**
 	 * @description - uploads the file to the server
 	 * @param {*} event
 	 */
@@ -266,8 +266,8 @@ export default function Home() {
 			setLoading(false);
 		}
 	};
-
-	/**
+  
+  /**
 	 * @description - Sets the response data
 	 * @param {*} responseData
 	 * @returns jsx
@@ -282,80 +282,74 @@ export default function Home() {
 		);
 	};
 
-	/**
-	 * @description - Renders the main body of the page.
-	 * @returns jsx
-	 */
-	const renderMainContent = () => {
-		return (
-			<>
-				<div className="container">
-					<div className="containerBoxOne">
-						<div>
-							<ConnectWallet
+  /**
+   * @description - Renders the main body of the page.
+   * @returns jsx
+   */
+  const renderMainContent = () => {
+    return (
+      <>
+        <div className="container">
+          <div className="container2">
+          <div className="containerBoxOne">
+            <div>
+              <ConnectWallet
 								walletConnected={walletConnected}
 								className="connectWallet"
 								connectWallet={connectWallet}
 							/>
-						</div>
-						<div className="mainContent">
-							<div>
-								<div className="mainFile">
-									<label htmlFor="file"></label>
-									<input
-										className="inputFile"
-										type="file"
-										name="file"
-										id="file"
-										onChange={setFileHandler}
-									/>
-									<label htmlFor="receiverAddress"></label>
-									<input
-										className="inputFile"
-										type="text"
-										placeholder="RECEIVER WALLET ADDRESS"
-										id="receiverAddress"
-										onChange={setReceiverAddressHandler}
-									/>
-								</div>
-								<div>
-									<button
-										style={{ "--clr": "skyblue", marginTop: "2%" }}
-										className={styles.connectBtn}
-										onClick={uploadToServer}>
-										<span>Generate share link 🔗</span>
-										<i></i>
-									</button>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div className="containerBoxTwo">
-						<InfoHeader />
-						<div>{loading ? "Uploading..." : renderResponse(responseData)}</div>
-					</div>
-				</div>
-			</>
-		);
-	};
+            </div>
+            <div className="mainContent">
+              <div>
+                <div className="mainFile">
+                  <label htmlFor="file"></label>
+                    <input
+                      className="inputFile"
+                      type="file"
+                      name="file"
+                      id="file"
+                      onChange={setFileHandler}
+                    />
+                  </label>
+                </div>
+                <div>
+                  <button
+                    style={{ "--clr": "skyblue", marginTop: "2%" }}
+                    className={styles.connectBtn}
+                    onClick={uploadToServer}
+                  >
+                    <span>Generate link 🔗</span>
+                    <i></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="containerBoxTwo">
+            <InfoHeader />
+            <div>{loading ? "Uploading..." : renderResponse(responseData)}</div>
+          </div>
+          </div>
+          <div className="txtbox">
+            <input className="textaria" type="text-area" placeholder="Recevicer's Wallet Address" id="receiverAddress" onChange={setReceiverAddressHandler}></input>
+          </div>
+        </div>
+        
+      </>
+    );
+  };
 
-	return (
-		<>
-			<div>
-				<Head>
-					<title>Secure Share Dapp</title>
-					<meta
-						name="description"
-						content="secure-share-app"
-					/>
-					<link
-						rel="icon"
-						href="/favicon.ico"
-					/>
-				</Head>
-
-				{renderMainContent()}
-			</div>
-		</>
-	);
+  return (
+    <>
+      <div>
+        <Head>
+          <title>Secure Share Dapp</title>
+          <meta name="description" content="secure-share-app" />
+          <link rel="icon" href="/favicon.ico" />
+        </Head>
+        {renderMainContent()}
+        {/* <footer id="footer">© Hackerspace {new Date().getFullYear()}</footer> */}
+      </div>
+    </>
+  );
 }
