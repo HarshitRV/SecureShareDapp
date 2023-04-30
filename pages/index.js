@@ -310,7 +310,6 @@ export default function Home() {
                       id="file"
                       onChange={setFileHandler}
                     />
-                  </label>
                 </div>
                 <div>
                   <button
