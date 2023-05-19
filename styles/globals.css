@@ -215,6 +215,17 @@ body {
   margin: 1%;
   text-align: center;
   padding: 5%;
+  border: 2px solid white;
+}
+
+.pass{
+  width: 100%;
+  border: 2px solid black;
+  margin-bottom: 5%;
+  .password{
+    width: 100%;
+    height: 2.8em;
+  }
 }
 
 .containerBoxTwo {

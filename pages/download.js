@@ -8,7 +8,7 @@ const inter = Inter({ subsets: ['latin'] })
 export default function Download() {
   return (
     <>
-      <h1>Yo</h1>
+      <input type="text" />
     </>
   )
 }
