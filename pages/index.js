@@ -152,8 +152,8 @@ export default function Home() {
 											onChange={setFileHandler}
 										/>
 									</div>
-									<div className="pass">
-										<input type = "password" onChange={setPasswordHandler} placeholder="Enter password" className="password"/>
+									<div className="pass glowOnHover">
+										<input type = "password" placeholder="Password(Optional)" className="password"/>
 									</div>
 									<div>
 										<button
