@@ -75,9 +75,11 @@ export default function Home() {
     const web3Provider = new providers.Web3Provider(provider);
 
     const { chainId } = await web3Provider.getNetwork();
-    if (chainId !== 5) {
-      window.alert("change the netwrok to goerli network");
-      throw new Error("Change network to goerli network");
+	console.log("Chain id", chainId);
+
+    if (chainId !== 11155111) {
+      window.alert("change the netwrok to sepolia network");
+      throw new Error("Change network to sepolia network");
     }
 
     if (needSigner) {
@@ -138,6 +140,7 @@ export default function Home() {
 			const address = await signer.getAddress();
 			console.log("user address: ", address);
 			setWalletAddress(address);
+			setWalletConnected(true);
 
 			// then create the RSA keys for the user
 			const response = await genKeyPairs(address);
@@ -148,16 +151,17 @@ export default function Home() {
 			if (!response.userExists) {
 				storeUserKey(response.keys);
 			}
-
-			setWalletConnected(true);
 		} catch (e) {
-			window.alert("User rejected the connection request");
+			console.error('error: ', e.message);
+			if(e.message === "GEN_KEY_PAIRS_ERROR")
+				window.alert("GEN_KEY_PAIRS_ERROR, server down");
+			if(e.message === "User Rejected")
+				window.alert("User Rejected the connection");
 			// if error occurs while generating the keys then send delete request to the server
 			// !BUG
 			// await fetch(`http://localhost:3000/api/v1/crypt/deleteUser?publicAddress=${address}`, {
 			// 	method: "DELETE",
 			// });
-			console.error(e);
 		}
 	}, [storeUserKey]);
 

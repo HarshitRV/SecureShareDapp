@@ -8,6 +8,9 @@ export const genKeyPairs = async (address) => {
 	const response = await fetch(
 		`http://localhost:3000/api/v1/crypt/create?publicAddress=${address}`
 	);
-	const data = await response.json();
-	return data;
+	if (response.ok) {
+		const data = await response.json();
+		return data;
+	}
+	throw new Error("GEN_KEY_PAIRS_ERROR");
 };
