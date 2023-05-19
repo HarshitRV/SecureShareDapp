@@ -22,7 +22,7 @@ import styles from "../styles/Button.module.css";
 export default function Home() {
 	const [fileData, setFile] = useState({
 		file: null,
-		receiverAddress: "",
+		password: "",
 	});
 	const [fileUploadStatus, setFileUploadStatus] = useState(false);
 	const [loading, setLoading] = useState(false);
@@ -46,24 +46,36 @@ export default function Home() {
 			});
 	};
 
+	const setPasswordHandler = (event) => {
+		setFile((prevState) => {
+			return {
+				...prevState,
+				password: event.target.value,
+			};
+		});
+	}
+
 	/**
 	 * @description - uploads the file to the server
 	 * @param {*} event
 	 */
 	const uploadToServer = async () => {
 		try {
-			const body = new FormData();
-
-			body.append("file", fileData.file);
-
-			const { file } = fileData;
-
-			console.table(fileData);
+			const { file, password } = fileData;
 
 			if (!file) {
 				window.alert("Please select a file");
 				return;
 			}
+
+			const body = new FormData();
+			body.append("file", fileData.file);
+
+			if(password.trim().length > 0) {
+				body.append("password", password.trim());
+			}
+
+			console.table(fileData);
 
 			setLoading(true);
 			const response = await fetch(
@@ -141,7 +153,7 @@ export default function Home() {
 										/>
 									</div>
 									<div className="pass">
-										<input type = "password" placeholder="Enter password" className="password"/>
+										<input type = "password" onChange={setPasswordHandler} placeholder="Enter password" className="password"/>
 									</div>
 									<div>
 										<button
