@@ -17,6 +17,7 @@ import { InfoHeader } from "@/components/Info/InfoHeader";
  * Styles
  */
 import styles from "../styles/Button.module.css";
+import Link from "next/link";
 
 // Home function
 export default function Home() {
@@ -53,7 +54,7 @@ export default function Home() {
 				password: event.target.value,
 			};
 		});
-	}
+	};
 
 	/**
 	 * @description - uploads the file to the server
@@ -71,7 +72,7 @@ export default function Home() {
 			const body = new FormData();
 			body.append("file", fileData.file);
 
-			if(password.trim().length > 0) {
+			if (password.trim().length > 0) {
 				body.append("password", password.trim());
 			}
 
@@ -98,18 +99,16 @@ export default function Home() {
 				setLoading(false);
 				setFileUploadStatus(true);
 			} else {
-				data = await response.json();
 				setResponseData({
 					message: "Failed to upload file",
 					longurl: "",
 					shortUrl: "",
 				});
-				throw new Error(data.message);
+				throw new Error("Server error");
 			}
 			console.log(data);
 		} catch (e) {
 			console.error(e);
-			setResponseData("Internal server error");
 			setLoading(false);
 		}
 	};
@@ -120,11 +119,15 @@ export default function Home() {
 	 * @returns jsx
 	 */
 	const renderResponse = (responseData) => {
-		console.log(renderResponse);
+		console.log(renderResponse.longurl);
+		const longUrl =
+			"http://localhost:3000/api/v2/file/64679d8803a7ba2c3c158002";
+
 		return (
 			<div>
 				<p>{responseData.message}</p>
 				<a href={responseData.longurl}>File Link</a>
+				<Link href="/download?id=6469e5026061508ef4b23a95">Download</Link>
 				{responseData.shortUrl && <a href={responseData.shortUrl}>Short URL</a>}
 			</div>
 		);
@@ -153,7 +156,11 @@ export default function Home() {
 										/>
 									</div>
 									<div className="pass glowOnHover">
-										<input type = "password" placeholder="Password(Optional)" className="password"/>
+										<input
+											type="password"
+											placeholder="Password(Optional)"
+											className="password"
+										/>
 									</div>
 									<div>
 										<button
@@ -211,7 +218,7 @@ export default function Home() {
 						href="/favicon.ico"
 					/>
 				</Head>
-				{fileUploadStatus ? renderFileUploaded() : renderMainContent()}
+				{true ? renderFileUploaded() : renderMainContent()}
 				{/* <footer id="footer">© Hackerspace {new Date().getFullYear()}</footer> */}
 			</div>
 		</>
