@@ -56,6 +56,34 @@ export default function Home() {
 		});
 	};
 
+	const copyLinkHandler = async () => {
+		if (window.location.protocol != "https:")
+			return alert("HTTPS is required to copy to clipboard");
+		await navigator.clipboard.writeText(
+			responseData.shortUrl || responseData.longurl
+		);
+		console.log(navigator.clipboard);
+		alert("Copied to clipboard");
+	};
+
+	const shareLinkHandler = async () => {
+		const shareData = {
+			title: "Share",
+			text: "Share the file link",
+			url: responseData.shortUrl || responseData.longurl,
+		};
+
+		if (navigator.canShare) {
+			try {
+				await navigator.share(shareData);
+			} catch (err) {
+				console.log(err);
+			}
+		} else {
+			alert("Your browser does not support the Share API");
+		}
+	};
+
 	/**
 	 * @description - uploads the file to the server
 	 * @param {*} event
@@ -193,10 +221,13 @@ export default function Home() {
 							<p className="paraText">Copy the link to share your file</p>
 							<div className="copyBox">
 								<button className="buttonBtn">
-									{ responseData.shortUrl ? responseData.shortUrl : responseData.longurl }
+									{responseData.shortUrl
+										? responseData.shortUrl
+										: responseData.longurl}
 								</button>
 								<a
-									href="#"
+									onClick={copyLinkHandler}
+									id="clipBoard"
 									className="rainbow-button">
 									<Image
 										className="imgIcon"
@@ -209,6 +240,7 @@ export default function Home() {
 								</a>
 							</div>
 							<a
+								onClick={shareLinkHandler}
 								href="#"
 								className="button">
 								🔗SHARE
@@ -234,7 +266,7 @@ export default function Home() {
 						href="/favicon.ico"
 					/>
 				</Head>
-				
+
 				{fileUploadStatus ? renderFileUploaded() : renderMainContent()}
 				{/* <footer id="footer">© Hackerspace {new Date().getFullYear()}</footer> */}
 			</div>

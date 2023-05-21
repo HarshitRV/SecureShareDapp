@@ -8,6 +8,7 @@ export const NavBar = props => {
             src = "/share.png"
             width = "35"
             height = "25"
+            alt = "logo"
             /> 
             <h3 className={styles.navTitle} >File Share</h3>
             <ul className={styles.navList}>
