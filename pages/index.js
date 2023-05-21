@@ -215,19 +215,20 @@ export default function Home() {
 
 	// Render returned file links after upload
 	const renderFileUploaded = () => {
+		const fileId = responseData.longurl.split("/").pop();
+		const downloadURL = `http://localhost:3001/download?id=${fileId}`;
+
 		return (
 			<>
 				<div className="container">
 					<div className="containerBoxOne">
 						<div>
 							<h1 className="share">Your File Is Ready To Share !</h1>
-							<p className="paraText">Copy the link to share your file</p>
 							<div className="copyBox">
-								<button className="buttonBtn">
-									{responseData.shortUrl
-										? responseData.shortUrl
-										: responseData.longurl}
-								</button>
+								<input
+									className="buttonBtn"
+									value={downloadURL}
+								/>
 								<a
 									onClick={copyLinkHandler}
 									id="clipBoard"
