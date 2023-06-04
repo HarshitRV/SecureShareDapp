@@ -1,5 +1,5 @@
 export const SECURE_SHARE_CONTRACT_ADDRESS =
-	"0xD5B3338972Ae155fF1ADdeD6d0B1Ae1f87ddF3bE";
+	"0x2Ba9D92Bd8552AC7296bD36E56CfCEa264B16acF";
 export const abi = [
 	{
 		inputs: [

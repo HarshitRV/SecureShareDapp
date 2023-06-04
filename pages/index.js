@@ -1,9 +1,4 @@
 /**
- * Node js modules
- */
-import crypto from "crypto";
-
-/**
  * Next js modules
  */
 import Head from "next/head";
@@ -44,7 +39,6 @@ import styles from "../styles/Button.module.css";
 import {
 	genKeyPairs,
 	updateUserRegisteredStatus,
-	retriveUserKeys,
 } from "@/server/serverapi";
 
 // Home function
@@ -210,14 +204,7 @@ export default function Home() {
 			}
 
 			if (response.userExists) {
-				const secureShareContract = new Contract(
-					SECURE_SHARE_CONTRACT_ADDRESS,
-					abi,
-					signer
-				);
-
-				const privateKey = await secureShareContract.getPrivateKeyHash();
-				console.log("privateKey: ", privateKey);
+				console.log("Welcome back!");
 			}
 		} catch (e) {
 			console.error("error: ", e.message);
@@ -236,7 +223,7 @@ export default function Home() {
 	useEffect(() => {
 		if (!walletConnected) {
 			web3ModalRef.current = new Web3Modal({
-				network: "goerli",
+				network: "sepolia",
 				providerOptions: {},
 				disableInjectedProvider: false,
 			});
