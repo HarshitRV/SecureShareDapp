@@ -1,5 +1,5 @@
 export const SECURE_SHARE_CONTRACT_ADDRESS =
-	"0x61355F789B701340cd5c8849cb34943aDBAeeb43";
+	"0xD5B3338972Ae155fF1ADdeD6d0B1Ae1f87ddF3bE";
 export const abi = [
 	{
 		inputs: [
@@ -13,7 +13,7 @@ export const abi = [
 		outputs: [
 			{
 				internalType: "string",
-				name: "publicKey",
+				name: "publicKeyHash",
 				type: "string",
 			},
 		],
@@ -22,7 +22,7 @@ export const abi = [
 	},
 	{
 		inputs: [],
-		name: "getAesKey",
+		name: "getAesKeyHash",
 		outputs: [
 			{
 				internalType: "string",
@@ -41,7 +41,7 @@ export const abi = [
 				components: [
 					{
 						internalType: "string",
-						name: "privateKey",
+						name: "privateKeyHash",
 						type: "string",
 					},
 					{
@@ -51,7 +51,7 @@ export const abi = [
 					},
 					{
 						internalType: "string",
-						name: "aesKey",
+						name: "aesKeyHash",
 						type: "string",
 					},
 				],
@@ -65,7 +65,7 @@ export const abi = [
 	},
 	{
 		inputs: [],
-		name: "getPrivateKey",
+		name: "getPrivateKeyHash",
 		outputs: [
 			{
 				internalType: "string",
@@ -99,7 +99,7 @@ export const abi = [
 		inputs: [
 			{
 				internalType: "string",
-				name: "_privateKey",
+				name: "_privateKeyHash",
 				type: "string",
 			},
 			{
@@ -109,7 +109,7 @@ export const abi = [
 			},
 			{
 				internalType: "string",
-				name: "_aesKey",
+				name: "_aesKeyHash",
 				type: "string",
 			},
 		],
@@ -126,7 +126,7 @@ export const abi = [
 				type: "address",
 			},
 		],
-		name: "storedUserPublicKeys",
+		name: "storedUserPublicKey",
 		outputs: [
 			{
 				internalType: "string",
