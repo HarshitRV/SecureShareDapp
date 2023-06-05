@@ -73,5 +73,5 @@ export default function Download() {
 		);
 	};
 
-	return <>{verified ? renderDownloadLink() : renderWalletAddressInput()}</>;
+	return <>{true ? renderDownloadLink() : renderWalletAddressInput()}</>;
 }
