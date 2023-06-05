@@ -43,6 +43,7 @@ import {
 
 // Home function
 export default function Home() {
+	const [origin, setOrigin] = useState("");
 	const [walletConnected, setWalletConnected] = useState(false);
 	const [walletAddress, setWalletAddress] = useState("");
 	const [fileData, setFile] = useState({
@@ -221,6 +222,7 @@ export default function Home() {
 	}, [storeUserKey]);
 
 	useEffect(() => {
+		setOrigin(window.location.origin);
 		if (!walletConnected) {
 			web3ModalRef.current = new Web3Modal({
 				network: "sepolia",
@@ -310,7 +312,7 @@ export default function Home() {
 
 			const response = await fetch(
 				// while testing use localhost
-				`http://localhost:3000/api/v1/crypt/upload?publicAddress=${address}&receiverAddress=${receiverAddress}`,
+				`${process.env.NEXT_PUBLIC_SERVER_URL}/api/v1/crypt/upload?publicAddress=${address}&receiverAddress=${receiverAddress}`,
 				{
 					method: "post",
 					body,
@@ -393,7 +395,7 @@ export default function Home() {
 											style={{ "--clr": "skyblue", marginTop: "2%" }}
 											className={styles.connectBtn}
 											onClick={uploadToServer}>
-											<span>Generate link 🔗</span>
+											<span>Generate link</span>
 											<i></i>
 										</button>
 									</div>
@@ -408,7 +410,7 @@ export default function Home() {
 						<input
 							className="textaria"
 							type="text-area"
-							placeholder="Recevicer's Wallet Address"
+							placeholder="Recever's Wallet Address"
 							id="receiverAddress"
 							onChange={setReceiverAddressHandler}></input>
 					</div>
@@ -420,7 +422,7 @@ export default function Home() {
 	const renderFileUploaded = () => {
 		const fileId = responseData.longurl?.split("/").pop();
 		console.log("renderFileUploaded called", fileId);
-		const downloadURL = `http://localhost:3001/download?id=${fileId}`;
+		const downloadURL = `${origin}/download?id=${fileId}`;
 
 		return (
 			<>

@@ -53,7 +53,7 @@ export default function Download() {
         <div className="downloadBox">
           <a
             className="rainbow-button"
-            href={`http://localhost:3000/api/v1/crypt/file/${fileId}?publicAddress=${walletAddress}`}
+            href={`${process.env.NEXT_PUBLIC_SERVER_URL}/api/v1/crypt/file/${fileId}?publicAddress=${walletAddress}`}
           >
             Download
           </a>

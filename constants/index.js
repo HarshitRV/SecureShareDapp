@@ -1,5 +1,4 @@
-export const SECURE_SHARE_CONTRACT_ADDRESS =
-	"0x2Ba9D92Bd8552AC7296bD36E56CfCEa264B16acF";
+export const SECURE_SHARE_CONTRACT_ADDRESS = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS;
 export const abi = [
 	{
 		inputs: [

@@ -6,7 +6,7 @@
  */
 export const genKeyPairs = async (address) => {
 	const response = await fetch(
-		`http://localhost:3000/api/v1/crypt/create?publicAddress=${address}`
+		`${process.env.NEXT_PUBLIC_SERVER_URL}/api/v1/crypt/create?publicAddress=${address}`
 	);
 	if (response.ok) {
 		const data = await response.json();
@@ -22,7 +22,7 @@ export const genKeyPairs = async (address) => {
  */
 export const updateUserRegisteredStatus = async (address, success) => {
 	const response = await fetch(
-		`http://localhost:3000/api/v1/crypt/registered?success=${success}&publicAddress=${address}`
+		`${process.env.NEXT_PUBLIC_SERVER_URL}/api/v1/crypt/registered?success=${success}&publicAddress=${address}`
 	);
 	if (response.ok) {
 		const data = await response.json();
@@ -38,7 +38,7 @@ export const updateUserRegisteredStatus = async (address, success) => {
  */
 export const retriveUserKeys = async (address) => {
 	const response = await fetch(
-		`http://localhost:3000/api/v1/crypt/getKeys?publicAddress=${address}`
+		`${process.env.NEXT_PUBLIC_SERVER_URL}/api/v1/crypt/getKeys?publicAddress=${address}`
 	);
 	if (response.ok) {
 		const data = await response.json();
@@ -54,7 +54,7 @@ export const retriveUserKeys = async (address) => {
  */
 export const verifyOwnership = async (fileId, address) => {
 	const response = await fetch(
-		`http://localhost:3000/api/v1/crypt/verifyFile/${fileId}?publicAddress=${address}`
+		`${process.env.NEXT_PUBLIC_SERVER_URL}/api/v1/crypt/verifyFile/${fileId}?publicAddress=${address}`
 	);
 	if (response.ok) {
 		const data = await response.json();
