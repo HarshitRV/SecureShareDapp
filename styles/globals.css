@@ -8,6 +8,10 @@
 
   /* Colors */
 
+  --clr-neon: rgba(235, 97, 143, 1);
+	--clr-bg: rgba(1, 1, 1, 1);
+	--clr-white: rgba(255, 255, 255, 1);
+  --bg-color:#191919;
   --clr-dark: 230 35% 7%;
   --clr-light: 231 77% 90%;
   --clr-white: 0 0% 100%;
@@ -171,6 +175,7 @@ body {
   font-weight: 900;
 }
 
+
 .container:before {
   content: '';
   background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
@@ -225,6 +230,24 @@ body {
   margin: 1%;
   text-align: center;
   padding: 5%;
+  /* border: 2px solid white; */
+}
+
+.pass {
+  width: 100%;
+  /* border: 2px solid black; */
+  margin-bottom: 5%;
+}
+.password {
+  width: 100%;
+  height: 1.8em;
+  background: transparent;
+  border: transparent;
+  text-align: left;
+  color: rgb(250, 248, 248);
+  font-weight: 500;
+  text-align: center;
+  font-size:  1.3rem;
 }
 
 .containerBoxTwo {
@@ -256,18 +279,19 @@ body {
   justify-content: center;
   /* border: 2px solid gray; */
 }
+
 @media(max-width: 99em) {
-  .textaria{
+  .textaria {
     margin: 0 20% 20% 12.5%;
     /* border: 5px solid blue; */
-  }  
+  }
 }
 
 @media(max-width: 90em) {
-  .textaria{
+  .textaria {
     margin: 0 20% 20% 10%;
     /* border: 5px solid rgb(17, 233, 20); */
-  }  
+  }
 }
 
 @media(max-width:85em) {
@@ -279,9 +303,11 @@ body {
   .container2 {
     display: flex;
     flex-direction: column-reverse;
+    border: 2px solid white;
   }
 
   .containerBoxOne {
+   
     text-align: center;
     padding: 5%;
     width: max-content;
@@ -289,6 +315,7 @@ body {
   }
 
   .containerBoxTwo {
+    border: 2px solid rgb(198, 22, 22);
     text-align: center;
     padding: 5%;
   }
@@ -300,6 +327,7 @@ body {
     display: flex;
     flex-direction: row-reverse;
   }
+
   .container2 {
     display: flex;
     flex-direction: column-reverse;
@@ -325,10 +353,11 @@ body {
 
 @media(max-width:26em) {
 
-  .container{
+  .container {
     width: 100%;
     height: 100%;
   }
+
   .container2 {
     width: 100%;
     height: 100%;
@@ -368,7 +397,7 @@ body {
   bottom: 0;
 }
 
-.textHeader::before {
+.textHeader::before{
   background-color: #111111;
   animation: typewritter var(--typewriterSpeed) 1s steps(18) forwards;
 }
@@ -398,39 +427,62 @@ body {
   text-align: center;
 }
 
-
-
-@keyframes typewritter {
-  to {
-    left: 100%;
-  }
+.glowOnHover{
+  border: none;
+  outline: none;
+  color: #fff;
+  background: #111;
+  position: relative;
+  z-index: 0;
+  border-radius: 0px;
+  letter-spacing: 1px;
+  font-size: 1.3rem;
+  margin: 1% 0%;
+  width:100%;
+  height: 40px;
+  margin-bottom: 5%;
+  
 }
 
-@keyframes blink {
-  to {
-    background: transparent;
-  }
+.glowOnHover:before {
+  content: '';
+  background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
+  position: absolute;
+  top: -1.8px;
+  left:-1.8px;
+  background-size: 400%;
+  z-index: -1;
+  filter: blur(0.5px);
+  width: calc(99.6% + 5px);
+  height: calc(97% + 5px);
+  animation: glowing 20s linear infinite;
+  opacity: 0;
+  transition: opacity .3s ease-in-out;
+  border-radius: 0px;
 }
 
-@keyframes fadeInUp {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.glowOnHover:active {
+  color: #000
 }
 
-@keyframes glowing {
-  0% {
-    background-position: 0 0;
-  }
+.glowOnHover:active:after {
+  background: transparent;
+}
 
-  50% {
-    background-position: 400% 0;
-  }
+.glowOnHover:before {
+  opacity: 1;
+}
 
-  100% {
-    background-position: 0 0;
-  }
+.glowOnHover:after {
+  z-index: -1;
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: #111;
+  left: 0;
+  top: 0;
+  border-radius: 0px;
 }
 
 .share{
@@ -453,66 +505,57 @@ body {
 
 .copyBox{
   display: flex;
+  margin-top: 3%;
+}
+
+.verifybox{
+  display: flex;
+  justify-content: center;
+  padding: 10%;
 }
 
 .buttonBtn {
-	--border-radius: 0px;
-	--border-width: 3px;
-
-  margin-left: 16%;
-  width: 50%;
-	appearance: none;
-	position: relative;
-	padding: 1em 2em;
-	border: 0;
-	background-color: transparent;
-	font-family: "Montserrat", sans-serif;
-	font-size: 1em;
-	font-weight: 600;
+  width: 100%;
+  padding: 1.02em;
 	color: #fff;
+  background-color: black;
 }
 
-.buttonBtn::after {
-	--m-i: linear-gradient(#000, #000);
-	--m-o: content-box, padding-box;
-
-	content: "";
-	position: absolute;
-	left: 0;
-	top: 0;
-	width: 100%;
-	height: 55px;
-	padding: var(--border-width);
-	border-radius: var(--border-radius);
-	background-image: conic-gradient(
-		#488cfb,
-		#29dbbc,
-		#ddf505,
-		#ff9f0e,
-		#e440bb,
-		#655adc,
-		#488cfb
-	);
-
-	mask-image: var(--m-i), var(--m-i);
-	mask-origin: var(--m-o);
-	mask-clip: var(--m-o);
-	mask-composite: exclude;
-	-webkit-mask-composite: destination-out;
-
-	filter: hue-rotate(0);
-	animation: hue linear 500ms infinite;
-	animation-play-state: paused;
+.btnbox{
+  padding: .2em;
+  width: 50%;
+  margin: 0% 0 2% 16%;
+  background: conic-gradient(#fd004c, #fe9000, #fff020, #3edf4b, #3363ff, #b102b7, #fd004c);
+  opacity: .9;
 }
 
-.buttonBtn:hover::after {
-	animation-play-state: running;
+.emailBox{
+  display: flex;
+  padding: .2em;
+  width: 50%;
+  background: conic-gradient(#fd004c, #fe9000, #fff020, #3edf4b, #3363ff, #b102b7, #fd004c);
+  opacity: .9;
 }
 
-a {
-  text-decoration:none;
-  color:#FFF;
+.emailField{
+  width: 100%;
+  padding: 1em;
+	color: #fff;
+  background-color: black;
 }
+
+.downloadBox{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5%;
+}
+
+.downloadHead{
+  text-align: center;
+  margin-top: 5%;
+}
+
 .rainbow-button {
   --primary-neon:rgba(231,131,243,.9);
   --light-neon:rgba(159,87,161,.7);
@@ -686,5 +729,41 @@ a {
 	}
 }
 
+@keyframes glowing {
+  0% { background-position: 0 0; }
+  50% { background-position: 400% 0; }
+  100% { background-position: 0 0; }
+}
 
+@keyframes typewritter {
+  to {
+    left: 100%;
+  }
+}
 
+@keyframes blink {
+  to {
+    background: transparent;
+  }
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes glowing {
+  0% {
+    background-position: 0 0;
+  }
+
+  50% {
+    background-position: 400% 0;
+  }
+
+  100% {
+    background-position: 0 0;
+  }
+}
