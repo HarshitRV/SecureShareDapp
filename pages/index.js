@@ -454,7 +454,7 @@ export default function Home() {
 								onClick={shareLinkHandler}
 								href="#"
 								className="button">
-								🔗SHARE
+								SHARE
 							</a>
 						</div>
 					</div>
@@ -477,7 +477,7 @@ export default function Home() {
 						href="/favicon.ico"
 					/>
 				</Head>
-				{true ? renderFileUploaded() : renderMainContent()}
+				{fileUploadStatus ? renderFileUploaded() : renderMainContent()}
 			</div>
 		</>
 	);

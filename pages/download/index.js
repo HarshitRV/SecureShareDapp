@@ -85,5 +85,5 @@ export default function Download() {
     );
   };
 
-  return <>{true ? renderDownloadLink() : renderWalletAddressInput()}</>;
+  return <>{verified ? renderDownloadLink() : renderWalletAddressInput()}</>;
 }
