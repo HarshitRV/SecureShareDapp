@@ -429,11 +429,13 @@ export default function Home() {
 						<div>
 							<h1 className="share">Your File Is Ready To Share !</h1>
 							<div className="copyBox">
+								<div className="btnbox">
 								<input
 									className="buttonBtn"
 									value={downloadURL}
 									readOnly
 								/>
+								</div>
 								<a
 									onClick={copyLinkHandler}
 									id="clipBoard"
@@ -443,7 +445,7 @@ export default function Home() {
 										src="/icons8-copy-64.png"
 										alt="icon btn"
 										width={20}
-										height={20}
+										height={30}
 									/>
 									Copy Link
 								</a>
@@ -475,7 +477,7 @@ export default function Home() {
 						href="/favicon.ico"
 					/>
 				</Head>
-				{fileUploadStatus ? renderFileUploaded() : renderMainContent()}
+				{true ? renderFileUploaded() : renderMainContent()}
 			</div>
 		</>
 	);
