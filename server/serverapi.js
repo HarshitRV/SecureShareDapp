@@ -5,6 +5,7 @@
  * @param address string user wallet address
  */
 export const genKeyPairs = async (address) => {
+	console.log("SERVER_URL: ",process.env.NEXT_PUBLIC_SERVER_URL);
 	const response = await fetch(
 		`${process.env.NEXT_PUBLIC_SERVER_URL}/api/v1/crypt/create?publicAddress=${address}`
 	);
